@@ -1,22 +1,25 @@
 import csv
 import argparse
-
+from . import segbits
 
 class DbEntry(object):
-    
 
-    def __init__(self, signature: str, coord: tuple):
+
+    def __init__(self, signature: str, coords: list):
         self.signature = signature
-        self.coord = coord
+        self.coords = coords
+
 
     @classmethod
     def from_dbline(dbline: str) -> 'DbEntry':
-        signature = dbline.split(' ')[0]
-        coords = tuple(map(int, dbline.split(' ')[1].split('_')))
+        signature, coords = segbits.read_segbits_line(dbline)
         return cls(signature, coords)
 
 
     def __str__(self):
-        return self.signature + ' ' + \
-               str(self.coord[0]) + '_' + \
-               str(self.coord[1]) + '\n'
+        res = self.signature
+        for coord in self.coords:
+            res += ' ' + \
+                   ('' if coord.isset else '!') + \
+                   str(coord.x) + '_' + str(coord.y) + '\n'
+        return res
