@@ -1,6 +1,4 @@
 from collections import namedtuple
-import enum
-import functools
 
 
 Bit = namedtuple('Bit', 'x y isset')
@@ -35,9 +33,9 @@ def parsebit(val: str):
 
 
 def read_segbits_line(line: str):
-    l = line.strip()
-    if l:
-        parts = l.split(' ')
+    linestrip = line.strip()
+    if linestrip:
+        parts = linestrip.split(' ')
         assert len(parts) > 1
         return parts[0], [parsebit(val) for val in parts[1:]]
 
