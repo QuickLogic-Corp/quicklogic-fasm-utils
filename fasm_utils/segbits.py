@@ -33,6 +33,7 @@ def parsebit(val: str):
 
 
 def read_segbits_line(line: str):
+    '''Parses segbits from line.'''
     linestrip = line.strip()
     if linestrip:
         parts = linestrip.split(' ')

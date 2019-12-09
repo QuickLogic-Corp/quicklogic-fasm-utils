@@ -2,7 +2,16 @@ from .db_entry import DbEntry
 
 
 class Table(object):
+    '''Represents single DB file in the database.
+    '''
     def __init__(self, filepath: str):
+        '''Creates Table from a DB file.
+
+        Parameters
+        ----------
+        filepath: str
+            Path to the DB file.
+        '''
         self.filepath = filepath
         self.mapping = {}
         with open(filepath, 'r') as f:
@@ -11,12 +20,25 @@ class Table(object):
                 self.mapping[entry.signature] = entry
 
     def get_entry(self, featurename: str):
+        '''Returns a matching DB entry for feature name or None.
+
+        Parameters
+        ----------
+        featurename: str
+            Name of the feature from FASM file.
+
+        Returns
+        -------
+        DbEntry: corresponding DbEntry or None if there is no such DbEntry
+        '''
         if featurename not in self.mapping:
             return None
         return self.mapping[featurename]
 
 
 class Database(object):
+    '''Contains all parsed DB files required to generate bitstream from FASM.
+    '''
     def __init__(self, db_root: str):
         self.db_root = db_root
         self.tables = {}

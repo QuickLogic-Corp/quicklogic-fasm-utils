@@ -2,6 +2,8 @@ from . import segbits
 
 
 class DbEntry(object):
+    '''Class representing single entry in FASM database.
+    '''
 
     def __init__(self, signature: str, coords: list):
         self.signature = signature
@@ -9,6 +11,13 @@ class DbEntry(object):
 
     @classmethod
     def from_dbline(cls, dbline: str) -> 'DbEntry':
+        '''Creates DbEntry from single line of the DB file.
+
+        Parameters
+        ----------
+        dbline: str
+            A line from DB file.
+        '''
         signature, coords = segbits.read_segbits_line(dbline)
         return cls(signature, coords)
 
