@@ -1,4 +1,5 @@
 from .db_entry import DbEntry
+import itertools
 
 
 class Table(object):
@@ -35,6 +36,9 @@ class Table(object):
             return None
         return self.mapping[featurename]
 
+    def __iter__(self):
+        return self.mapping.values().__iter__()
+
 
 class Database(object):
     '''Contains all parsed DB files required to generate bitstream from FASM.
@@ -58,3 +62,6 @@ class Database(object):
             if feature is not None:
                 return feature
         return None
+
+    def __iter__(self):
+        return itertools.chain.from_iterable(self.tables.values())
