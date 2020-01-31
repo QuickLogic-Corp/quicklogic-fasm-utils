@@ -24,7 +24,8 @@ class DbEntry(object):
     def __str__(self):
         res = self.signature
         for coord in self.coords:
-            res += ' ' + \
-                   ('' if coord.isset else '!') + \
-                   str(coord.x) + '_' + str(coord.y) + '\n'
+            res += ' {}{}_{}'.format(
+                    '' if coord.isset else '!',
+                    coord.x, coord.y)
+        res += '\n'
         return res
