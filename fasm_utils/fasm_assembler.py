@@ -154,12 +154,14 @@ class FasmAssembler(object):
         except FasmLookupError:
             missing_features.append(fasmline.set_feature.feature)
 
-        if not self._configuredbit:
+        if fasmline.set_feature.value != 0 and not self._configuredbit:
             raise FasmInconsistentBits(
-                'The implementation of enable_feature() function did not \
-                 use the set_config_bit() or clear_config_bit()\
-                 for the feature: {}'.format(str(fasmline.set_feature.feature))
+                'The implementation of enable_feature() function did not '
+                'use the set_config_bit() or clear_config_bit() '
+                'for the feature: {}'.format(str(fasmline.set_feature.feature))
             )
+
+        self._configuredbit = False
 
     def parse_fasm_filename(self, filename, extra_features=[]):
         missing_features = []
